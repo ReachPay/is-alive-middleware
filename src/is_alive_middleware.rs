@@ -2,6 +2,7 @@ use my_http_server::{
     HttpContext, HttpFailResult, HttpOkResult, HttpOutput, HttpServerMiddleware,
     HttpServerRequestFlow,
 };
+use rust_extensions::date_time::DateTimeAsMicroseconds;
 use serde::{Deserialize, Serialize};
 
 pub struct IsAliveMiddleware {
@@ -21,6 +22,7 @@ impl IsAliveMiddleware {
                 name: app_name,
                 version: app_version,
                 env_info,
+                started: DateTimeAsMicroseconds::now().unix_microseconds,
             },
         }
     }
@@ -48,4 +50,5 @@ pub struct IsAliveContract {
     name: String,
     version: String,
     env_info: Option<String>,
+    started: i64,
 }
